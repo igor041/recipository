@@ -32,7 +32,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   gridColumnApi;
   defaultColDef;
   selectedRecipeId;
-  @ViewChild("userEdit") recipeEdit: RecipeEditComponent;
+  @ViewChild("recipeEdit") recipeEdit: RecipeEditComponent;
   public loadingCellRenderer;
   public loadingCellRendererParams;
   selectedRows; 

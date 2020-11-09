@@ -1,1 +1,83 @@
-<p>recipe-edit works!</p>
+<!-- https://stackblitz.com/edit/example-angular-material-reactive-form?file=app%2Fapp.component.html -->
+
+<span >
+
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <div fxShow="true" fxHide.lt-md fxFlex fxLayout>
+                <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+                <div fxFlex>
+                    <span class="fill-remaining-space">Edit User</span>
+                </div>
+                <div fxFlex fxLayoutAlign="center center">
+                </div>
+                <div fxFlex fxLayoutAlign="flex-end center">
+                    <button mat-raised-button (click)="saveData()" style="outline: none;">
+                        <mat-icon>save</mat-icon> Save</button>
+                </div>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-tab-group #tabs animationDuration="0ms" dynamicHeight [backgroundColor]="'black'">
+        <mat-tab label="General Info">
+            <mat-card fxFill>
+                <form [formGroup]="formGroup" class="form" fxFill>
+                    <div class="form-row" style="margin-bottom: -2em;">
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                                <mat-label>Title</mat-label>
+                                <input matInput placeholder="Title" formControlName="title" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                                <mat-label>Description</mat-label>
+                                <input matInput placeholder="Description" formControlName="description" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom: -2em;">
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
+                                <mat-label>Ingredients</mat-label>
+                                <input matInput placeholder="Ingredients" formControlName="ingredients" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                                <mat-label>Recipe</mat-label>
+                                <input matInput placeholder="Recipe" formControlName="recipe" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <ng-template #forminfo>
+                        <div class="container">
+                            {{ post | json }}
+                        </div>
+                    </ng-template>
+                    <div class="container" style="margin: auto; align-content: center;" fxFill>
+                        <div>
+                            <!-- <app-address-form #addressForm [userName]="userName"></app-address-form> -->
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Vehicles">
+            <mat-card fxFill>
+                <!-- <app-car-manager></app-car-manager> -->
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Hiking">
+            <!-- <app-hiking-manager></app-hiking-manager>     -->
+        </mat-tab>
+        <mat-tab label="Racing">
+            <!-- <app-racing-manager></app-racing-manager> -->
+        </mat-tab>
+    </mat-tab-group>
+</span>

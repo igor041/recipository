@@ -2,14 +2,13 @@
 @import "ag-grid-community/src/styles/ag-grid.scss";
 @import "ag-grid-community/src/styles/ag-theme-alpine-dark/sass/_ag-theme-alpine-dark-mixin.scss";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import "app/theme/styles/base";
-@import "app/theme/styles/spaces";
-@import "app/theme/styles/theme";
-@import "app/theme/styles/rtl";
 
-@import "app/theme/styles/skins/orange-dark";
-@include angular-material-theme($orange-dark-theme);
-@include theme-reset($orange-dark-theme);   
+//@import "app/theme/styles/skins/orange-dark";
+// @include angular-material-theme($orange-dark-theme);
+// @include theme-reset($orange-dark-theme);  
+
+// @import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";							
+ //@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -14,6 +14,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { AgGridModule } from 'ag-grid-angular';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
  
 @NgModule({
   declarations: [
@@ -32,7 +37,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatIconModule,
     HttpClientModule,
     AgGridModule.withComponents(null),
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatTabsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
