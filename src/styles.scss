@@ -1,0 +1,66 @@
+/* You can add global styles to this file, and also import other style files */
+@import "ag-grid-community/src/styles/ag-grid.scss";
+@import "ag-grid-community/src/styles/ag-theme-alpine-dark/sass/_ag-theme-alpine-dark-mixin.scss";
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "app/theme/styles/base";
+@import "app/theme/styles/spaces";
+@import "app/theme/styles/theme";
+@import "app/theme/styles/rtl";
+
+@import "app/theme/styles/skins/orange-dark";
+@include angular-material-theme($orange-dark-theme);
+@include theme-reset($orange-dark-theme);   
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ag-theme-alpine-dark {
+    @include ag-theme-alpine-dark((
+        odd-row-background-color: #303030
+    ));
+  }
+  
+  .auth{
+      white-space: nowrap;
+      padding: 7px 14px;
+      font-weight: 500;    
+  }
+  
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active  {
+    transition: background-color 5000s;
+    -webkit-text-fill-color: #fff !important;
+  }
+  
+    // Material tab classes
+    /* Styles for tab labels */
+    .mat-tab-label {
+      // min-width: 25px !important;
+      // padding: 5px;
+       background-color:transparent;
+      // color: red;
+       //font-weight: 700;
+    }
+  
+    .mat-tab-group {
+      // min-width: 25px !important;
+      // padding: 5px;
+       background-color:black;
+      // color: red;
+       //font-weight: 700;
+    }
+    
+    /* Styles for the active tab label */
+    .mat-tab-label-active {
+      background-color: #424242 !important;
+    }
+  
+  //   .mat-form-field-wrapper{
+  //     margin-bottom: -1.25em;
+  //  }
+
+
+
+

@@ -1,0 +1,18 @@
+[
+    {
+        "id": "1",
+        "title" : "Recipe 1",
+        "description": "Description of recipe 1", 
+        "ingredients": "blh blah",
+        "recipe": "20ml of vodka. Drink.",
+        "link" : "http:://www.recipes.com/recipe1"
+    },
+    {
+        "id": "2",
+        "title" : "Recipe 2",
+        "description": "Description of recipe 2", 
+        "ingredients": "blh blah",
+        "recipe": "20ml of beer. Drink.",
+        "link" : "http:://www.recipes.com/recipe2"
+    }
+]

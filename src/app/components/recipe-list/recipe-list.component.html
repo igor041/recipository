@@ -1,1 +1,32 @@
-<p>recipe-list works!</p>
+<span ng-if="DEBUG"></span>
+<br/>
+<div style="margin: auto; width: 90%;">
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <div fxShow="true" fxHide.lt-md fxFlex fxLayout>
+                <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+                <div fxFlex>
+                    <span class="fill-remaining-space">Recipes</span>
+                </div>
+                <div fxFlex fxLayoutAlign="center center">
+                </div>
+                <div fxFlex fxLayoutAlign="flex-end center">                    
+                    <button mat-raised-button (click)="refreshGrid()" style="outline: none;">
+                        <mat-icon>refresh</mat-icon> 
+                        Refresh
+                    </button>
+                </div>
+              </div>
+        </mat-toolbar-row>
+    </mat-toolbar><br />
+    <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
+        class="ag-theme-material" (gridReady)="onGridReady($event)" (selectionChanged)="onSelectionChanged($event)"
+        [defaultColDef]="defaultColDef" [rowData]="rowData" [columnDefs]="columnDefs"
+        [loadingCellRenderer]="loadingCellRenderer" [loadingCellRendererParams]="loadingCellRendererParams">
+    </ag-grid-angular>
+</div>
+<br />
+<div style="margin: auto; width: 100%;">
+    <app-recipe-edit #recipeEdit [(recipeId)]="selectedRecipeId"></app-recipe-edit>
+</div>
+<br /><br />

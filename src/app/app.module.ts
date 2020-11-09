@@ -7,7 +7,14 @@ import { HomeComponent } from './components/home/home.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
 import { RecipeManagerComponent } from './components/recipe-manager/recipe-manager.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { AgGridModule } from 'ag-grid-angular';
+import { FlexLayoutModule } from '@angular/flex-layout';
+ 
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +25,14 @@ import { RecipeManagerComponent } from './components/recipe-manager/recipe-manag
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatSnackBarModule,
+    MatIconModule,
+    HttpClientModule,
+    AgGridModule.withComponents(null),
+    FlexLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]
