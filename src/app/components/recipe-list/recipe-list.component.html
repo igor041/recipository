@@ -19,15 +19,22 @@
               </div>
         </mat-toolbar-row>
     </mat-toolbar><br />
-    <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
+
+    <ul>
+        <li *ngFor="let recipe of recipes">  
+            <app-recipe-list-item [recipe]="recipe" (recipeChange)="editRecipe(recipe.id)"></app-recipe-list-item>
+        </li>      
+    </ul>
+
+    <!-- <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
         class="ag-theme-material" (gridReady)="onGridReady($event)" (selectionChanged)="onSelectionChanged($event)"
         [defaultColDef]="defaultColDef" [rowData]="rowData" [columnDefs]="columnDefs"
         [loadingCellRenderer]="loadingCellRenderer" [loadingCellRendererParams]="loadingCellRendererParams">
-    </ag-grid-angular>
+    </ag-grid-angular> -->
 </div>
 <br />
-<div style="margin: auto; width: 100%;">
-    <app-recipe-edit #recipeEdit [(recipeId)]="selectedRecipeId"></app-recipe-edit>
+<div style="margin: auto; width: 90%;">
+    <app-recipe-edit #recipeEdit [recipeId]="selectedRecipeId"></app-recipe-edit>
 </div>
 <br /><br />
 

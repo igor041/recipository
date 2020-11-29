@@ -19,6 +19,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { RecipeListItemComponent } from './components/recipe-list-item/recipe-list-item.component';
  
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MatInputModule } from '@angular/material/input';
     HomeComponent,
     RecipeListComponent,
     RecipeEditComponent,
-    RecipeManagerComponent
+    RecipeManagerComponent,
+    RecipeListItemComponent
   ],
   imports: [
     BrowserModule,

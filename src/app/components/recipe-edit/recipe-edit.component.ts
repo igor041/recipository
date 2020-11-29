@@ -14,7 +14,13 @@ import { Observable } from 'rxjs';
 export class RecipeEditComponent implements OnInit, AfterViewInit {
 
   @Input() recipeId: string; 
-  formGroup: FormGroup;
+  // private _recipeId;
+  // public get recipeId() { return this._recipeId; }
+  // public set recipeId(id) {
+  //   // logic
+  //   this._recipeId = id;
+  // }
+  recipeForm: FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
   public currentRecipe: Recipe;
@@ -27,7 +33,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
     this.logger.log("RecipeEditComponent.ctor.");
   }
 
-  openSnackBar(message: string, action: string) {
+  openSnackBar(message: string, action: string = "") {
     this.snackBar.open(message, action, {
       duration: 2000,
     });
@@ -43,25 +49,28 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.createForm();
     this.loadRecipe(this.recipeId);
+    this.recipeForm.valueChanges.subscribe(x => {
+      this.logger.log("recipeForm chnages!");
+      //this.logger.log("Formvalue has changed! v: " + JSON.stringify(this.recipeForm.get("title")));
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.recipeID?.currentValue) {
+    if (changes.recipeId?.currentValue) {
       this.logger.log("RecipeEdit.ngOnChanges:" + JSON.stringify(changes) + ",recipeId: " + changes.recipeId.currentValue);
-      this.recipeId = changes.recipeName.currentValue;
+      this.recipeId = changes.recipeId?.currentValue;
       this.loadRecipe(this.recipeId);
-      // if(this.addressForm){
-      //   this.addressForm.recipeName = this.recipeId;
-      // }
     }
   }
 
   saveData() {
-    throw new Error("Not implemented.");
+    //this.openSnackBar("savedata1():" + JSON.stringify(this.recipeForm), "");
+    this.openSnackBar("savedata2():" + JSON.stringify(this.currentRecipe), "");
   }
 
-  loadRecipe(recipename: string) {
-    this.recipeService.getRecipe(recipename).subscribe(u => {
+  loadRecipe(recipeId: string) {
+    this.recipeService.getRecipe(recipeId).subscribe(u => {
+      this.logger.log("recipe: " + JSON.stringify(u));
       this.currentRecipe = u;
       this.setRecipeValue(u);    
     });
@@ -76,7 +85,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
 //     "link" : "http:://www.recipes.com/recipe1"
 // },
   setRecipeValue(recipe: Recipe) {
-    this.formGroup.setValue({ 
+    this.recipeForm.setValue({ 
       id: (recipe?.id || ''), 
       title: (recipe?.title || ''), 
       description: (recipe?.description || ''), 
@@ -88,7 +97,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
 
   createForm() {
     let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    this.formGroup = this.formBuilder.group({
+    this.recipeForm = this.formBuilder.group({
       'id': [null, Validators.required], 
       'title': [null, Validators.required],
       'description': [null, Validators.required],
@@ -99,21 +108,21 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   }
 
   setChangeValidate() {
-    this.formGroup.get('validate').valueChanges.subscribe(
+    this.recipeForm.get('validate').valueChanges.subscribe(
       (validate) => {
         if (validate == '1') {
-          this.formGroup.get('name').setValidators([Validators.required, Validators.minLength(3)]);
+          this.recipeForm.get('name').setValidators([Validators.required, Validators.minLength(3)]);
           this.titleAlert = "You need to specify at least 3 characters";
         } else {
-          this.formGroup.get('name').setValidators(Validators.required);
+          this.recipeForm.get('name').setValidators(Validators.required);
         }
-        this.formGroup.get('name').updateValueAndValidity();
+        this.recipeForm.get('name').updateValueAndValidity();
       }
     )
   }
 
   get name() {
-    return this.formGroup.get('name') as FormControl
+    return this.recipeForm.get('name') as FormControl
   }
 
   checkPassword(control) {
@@ -135,17 +144,18 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   }
 
   getErrorEmail() {
-    return this.formGroup.get('email').hasError('required') ? 'Field is required' :
-      this.formGroup.get('email').hasError('pattern') ? 'Not a valid emailaddress' :
-        this.formGroup.get('email').hasError('alreadyInUse') ? 'This emailaddress is already in use' : '';
+    return this.recipeForm.get('email').hasError('required') ? 'Field is required' :
+      this.recipeForm.get('email').hasError('pattern') ? 'Not a valid emailaddress' :
+        this.recipeForm.get('email').hasError('alreadyInUse') ? 'This emailaddress is already in use' : '';
   }
 
   getErrorPassword() {
-    return this.formGroup.get('password').hasError('required') ? 'Field is required (at least eight characters, one uppercase letter and one number)' :
-      this.formGroup.get('password').hasError('requirements') ? 'Password needs to be at least eight characters, one uppercase letter and one number' : '';
+    return this.recipeForm.get('password').hasError('required') ? 'Field is required (at least eight characters, one uppercase letter and one number)' :
+      this.recipeForm.get('password').hasError('requirements') ? 'Password needs to be at least eight characters, one uppercase letter and one number' : '';
   }
 
   onSubmit(post) {
+    this.openSnackBar("Onsubmit");
     this.post = post;
   }
 

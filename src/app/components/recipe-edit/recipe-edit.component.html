@@ -1,13 +1,13 @@
 <!-- https://stackblitz.com/edit/example-angular-material-reactive-form?file=app%2Fapp.component.html -->
 
-<span >
+<span *ngIf="recipeId">
 
     <mat-toolbar color="primary">
         <mat-toolbar-row>
             <div fxShow="true" fxHide.lt-md fxFlex fxLayout>
                 <!-- The following menu items will be hidden on both SM and XS screen sizes -->
                 <div fxFlex>
-                    <span class="fill-remaining-space">Edit User</span>
+                    <span class="fill-remaining-space">Edit Recipe</span>
                 </div>
                 <div fxFlex fxLayoutAlign="center center">
                 </div>
@@ -22,7 +22,7 @@
     <mat-tab-group #tabs animationDuration="0ms" dynamicHeight [backgroundColor]="'black'">
         <mat-tab label="General Info">
             <mat-card fxFill>
-                <form [formGroup]="formGroup" class="form" fxFill>
+                <form [formGroup]="recipeForm" class="form" fxFill>
                     <div class="form-row" style="margin-bottom: -2em;">
                         <div class="form-group col-md-6">
                             <mat-form-field appearance="outline" fxFlexFill>
@@ -68,16 +68,10 @@
                 </form>
             </mat-card>
         </mat-tab>
-        <mat-tab label="Vehicles">
+        <mat-tab label="Ingridients">
             <mat-card fxFill>
                 <!-- <app-car-manager></app-car-manager> -->
             </mat-card>
-        </mat-tab>
-        <mat-tab label="Hiking">
-            <!-- <app-hiking-manager></app-hiking-manager>     -->
-        </mat-tab>
-        <mat-tab label="Racing">
-            <!-- <app-racing-manager></app-racing-manager> -->
         </mat-tab>
     </mat-tab-group>
 </span>

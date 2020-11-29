@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Recipe } from '@root/app/models/recipe';
 import { AgGridAngular } from 'ag-grid-angular';
 import { GridOptions } from 'ag-grid-community';
+import { Observable } from 'rxjs';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { environment } from 'src/environments/environment';
 import { LoggerService } from '../../services/logger.service';
@@ -44,6 +45,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     public injector: Injector,
     public router: Router,
     public logger: LoggerService,
+    private cd: ChangeDetectorRef
     //public accountService: AccountService
     ) {
 
@@ -77,6 +79,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     this.recipeService.getRecipes().subscribe(
       ur => {
         this.logger.log("Recipes:" + JSON.stringify(ur));
+        this.recipes = ur;
         this.rowData = ur;
       }
     );
@@ -94,16 +97,30 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   onRowClicked() {
     this.selectedRows = this.gridApi.getSelectedRows();
     this.selectedRecipeId = this.selectedRows[0].id;
-    console.log("Selected user id: " + this.selectedRows[0].id);
-    this.recipeEdit.recipeId = this.selectedRecipeId;
+    this.editRecipe(this.selectedRecipeId);
+  }
+
+  editRecipe(id){
+    this.logger.log("recipe-list.editRecipe(id):" + JSON.stringify(id))
+    //this.selectedRows = this.gridApi.getSelectedRows();
+    //this.selectedRecipeId = this.selectedRows[0].id;
+    //console.log("activateEditRecipePane.Selected user id: " + this.selectedRows[0].id);
+    this.selectedRecipeId = id;
   }
 
   onSelectionChanged(event) { }
 
+  handleGetRecipes(recipes){
+    this.rowData = recipes;
+    const params = { force: true };
+    this.gridApi.setRowData(this.rowData)
+    this.gridApi.refreshCells(params); 
+  }
+
   refreshGrid() {
     this.recipeService.getRecipes().subscribe(
-      ur => {
-        this.rowData = ur;
+      recipes => {
+        this.rowData = recipes;
         const params = { force: true };
         this.gridApi.setRowData(this.rowData)
         this.gridApi.refreshCells(params); 
