@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { Recipe } from '@root/app/models/recipe';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-//import { MessageService } from '@root/app/services/message.service';
-import { environment } from '../../environments/environment';
+import { environment } from '@root/environments/environment';
 import { catchError, first, map, mergeMap, switchMap, take } from 'rxjs/operators';
 import { viewClassName } from '@angular/compiler';
 import { LoggerService } from '@root/app/services/logger.service';
@@ -11,17 +10,16 @@ import { LoggerService } from '@root/app/services/logger.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RecipeService {
+export class RecipeDbService {
 
   // Url of the node.js/Express Recipe service running on port 8000.
   public nodeRecipeSvcUrl = environment.apiUrl; // 'http://localhost:8000/';
   // Url of the static data served through angular app.
   public recipesUrl = "assets/data/";
   public isServiceRunning: boolean = false;
-  //public tmprecipe: Recipe;
+  public tmprecipe: Recipe;
 
   constructor(
-    //private messageService: MessageService,
     private http: HttpClient,
     private logger: LoggerService ) {
     this.isServiceRunning = true;
@@ -71,9 +69,9 @@ export class RecipeService {
     return this.http.get<Recipe[]>(this.recipesUrl + 'recipes.json');
   }
 
-  getLocalRecipe(recipeId): Observable<Recipe> {
+  getLocalRecipe(id): Observable<Recipe> {
     return this.getLocalRecipes().pipe(
-      map(u=> u.find( i => i.id === recipeId))
+      map(u=> u.find( i => i.id === id))
     );
   }
 
@@ -81,23 +79,15 @@ export class RecipeService {
     return this.http.post<Recipe>(this.nodeRecipeSvcUrl + 'api/recipes/', recipe)
   }
 
-  updateRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.http.put<Recipe>(
+  updateRecipe(recipe: Recipe): Observable<void> {
+    return this.http.put<void>(
       this.nodeRecipeSvcUrl + 'api/recipes/' + recipe.id,
       recipe
     )
   }
 
-  saveRecipe(recipe): Observable<Recipe>{
-    if(recipe.id){
-      return this.insertRecipe(recipe);
-    }else{
-      return this.updateRecipe(recipe);
-    }
-  }
-
-  deleteRecipe(recipeId: string) {
-    return this.http.delete(this.nodeRecipeSvcUrl + 'api/recipes/' + recipeId)
+  deleteRecipe(recipename: string) {
+    return this.http.delete(this.nodeRecipeSvcUrl + 'api/recipes/' + recipename)
   }
 }
 

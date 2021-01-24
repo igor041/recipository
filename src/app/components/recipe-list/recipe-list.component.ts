@@ -78,11 +78,20 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.recipeService.getRecipes().subscribe(
       ur => {
-        this.logger.log("Recipes:" + JSON.stringify(ur));
+        //this.logger.log("Recipes:" + JSON.stringify(ur));
         this.recipes = ur;
         this.rowData = ur;
       }
     );
+  }
+
+  selectionChanged_RecipeList(e){
+    if(e?.option?.value){
+      this.selectedRecipeId = e.option.value;
+      this.editRecipe(this.selectedRecipeId);
+      //this.logger.log("selectionChanged_RecipeList(e):" + JSON.stringify(e.option.value))
+      //console.dir(e.option);
+    }
   }
 
   ngAfterViewInit() { }
@@ -101,11 +110,15 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
   }
 
   editRecipe(id){
-    this.logger.log("recipe-list.editRecipe(id):" + JSON.stringify(id))
+    this.logger.log("recipe-list.editRecipe(id):"); // + JSON.stringify(id))
     //this.selectedRows = this.gridApi.getSelectedRows();
     //this.selectedRecipeId = this.selectedRows[0].id;
     //console.log("activateEditRecipePane.Selected user id: " + this.selectedRows[0].id);
     this.selectedRecipeId = id;
+  }
+
+  newRecipe(){
+    this.selectedRecipeId = null;
   }
 
   onSelectionChanged(event) { }

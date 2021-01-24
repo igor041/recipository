@@ -5,6 +5,7 @@ import { Recipe } from '@root/app/models/recipe';
 import { RecipeService } from '@root/app/services/recipe.service';
 import { LoggerService } from '@root/app/services/logger.service';
 import { Observable } from 'rxjs';
+import { RecipeDbService } from '@root/app/services/recipe-db.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -13,17 +14,14 @@ import { Observable } from 'rxjs';
 })
 export class RecipeEditComponent implements OnInit, AfterViewInit {
 
-  @Input() recipeId: string; 
-  // private _recipeId;
-  // public get recipeId() { return this._recipeId; }
-  // public set recipeId(id) {
-  //   // logic
-  //   this._recipeId = id;
-  // }
+  @Input() recipeId: string;
   recipeForm: FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
   public currentRecipe: Recipe;
+  public get currentRecipeJson(): string{
+    return JSON.stringify(this.currentRecipe);
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,57 +38,79 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-      // this.addressForms.changes.subscribe((comps: QueryList <AddressFormComponent>) =>
-      // {
-      //     this.addressForm = comps.first;
-      // });
+    // this.addressForms.changes.subscribe((comps: QueryList <AddressFormComponent>) =>
+    // {
+    //     this.addressForm = comps.first;
+    // });
   }
 
   ngOnInit() {
     this.createForm();
     this.loadRecipe(this.recipeId);
     this.recipeForm.valueChanges.subscribe(x => {
-      this.logger.log("recipeForm chnages!");
-      //this.logger.log("Formvalue has changed! v: " + JSON.stringify(this.recipeForm.get("title")));
-    })
+      if (this.currentRecipe) {
+        //this.logger.log("valchanges.x: " + JSON.stringify(x));
+        this.currentRecipe.title = x.title;
+        this.currentRecipe.description = x.description;
+        this.currentRecipe.ingredients = x.ingridients;
+        this.currentRecipe.link = x.link;
+        this.currentRecipe.recipe = x.recipe; 
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.recipeId?.currentValue) {
+      // Edit Existing
       this.logger.log("RecipeEdit.ngOnChanges:" + JSON.stringify(changes) + ",recipeId: " + changes.recipeId.currentValue);
       this.recipeId = changes.recipeId?.currentValue;
       this.loadRecipe(this.recipeId);
+    }else{
+      // Create New
+      this.logger.log("RecipeEdit.creatingNew:");
+      this.currentRecipe = new Recipe();
+      this.clearForm();
     }
+  }
+
+  clearForm() {
+    this.setRecipeFormValue(null);
   }
 
   saveData() {
     //this.openSnackBar("savedata1():" + JSON.stringify(this.recipeForm), "");
     this.openSnackBar("savedata2():" + JSON.stringify(this.currentRecipe), "");
+    this.recipeService.saveRecipe(this.currentRecipe).subscribe(
+      r => this.logger.log("SaveData().r: " + r)
+    );
   }
 
   loadRecipe(recipeId: string) {
     this.recipeService.getRecipe(recipeId).subscribe(u => {
       this.logger.log("recipe: " + JSON.stringify(u));
       this.currentRecipe = u;
-      this.setRecipeValue(u);    
+      this.setRecipeFormValue(u);
     });
   }
 
-//   {
-//     "id": "1",
-//     "title" : "Recipe 1",
-//     "description": "Description of recipe 1", 
-//     "ingredients": "blh blah",
-//     "recipe": "20ml of vodka. Drink.",
-//     "link" : "http:://www.recipes.com/recipe1"
-// },
-  setRecipeValue(recipe: Recipe) {
-    this.recipeForm.setValue({ 
-      id: (recipe?.id || ''), 
-      title: (recipe?.title || ''), 
-      description: (recipe?.description || ''), 
-      ingredients: (recipe?.ingredients || ''), 
-      recipe: (recipe?.recipe || ''), 
+  //   {
+  //     "id": "1",
+  //     "title" : "Recipe 1",
+  //     "description": "Description of recipe 1", 
+  //     "ingredients": "blh blah",
+  //     "recipe": "20ml of vodka. Drink.",
+  //     "link" : "http:://www.recipes.com/recipe1"
+  // },
+  setRecipeFormValue(recipe: Recipe) {
+    // if(!recipe){
+    //   recipe = new Recipe();
+    // }
+    this.recipeForm.setValue({
+      id: (recipe?.id || ''),
+      title: (recipe?.title || ''),
+      description: (recipe?.description || ''),
+      ingredients: (recipe?.ingredients || ''),
+      recipe: (recipe?.recipe || ''),
       link: (recipe?.link || '')
     });
   }
@@ -98,11 +118,11 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   createForm() {
     let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     this.recipeForm = this.formBuilder.group({
-      'id': [null, Validators.required], 
+      'id': [null, Validators.required],
       'title': [null, Validators.required],
       'description': [null, Validators.required],
       'ingredients': [null, Validators.required],
-      'recipe':[null, Validators.required],
+      'recipe': [null, Validators.required],
       'link': [null],
     });
   }

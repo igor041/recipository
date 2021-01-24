@@ -1,5 +1,5 @@
 <span ng-if="DEBUG"></span>
-<br/>
+<br />
 <div style="margin: auto; width: 90%;">
     <mat-toolbar color="primary">
         <mat-toolbar-row>
@@ -10,21 +10,25 @@
                 </div>
                 <div fxFlex fxLayoutAlign="center center">
                 </div>
-                <div fxFlex fxLayoutAlign="flex-end center">                    
+                <div fxFlex fxLayoutAlign="flex-end center">
+                    <button mat-raised-button (click)="newRecipe()" style="outline: none;">
+                        <mat-icon>new</mat-icon>
+                        New Recipe
+                    </button>
                     <button mat-raised-button (click)="refreshGrid()" style="outline: none;">
-                        <mat-icon>refresh</mat-icon> 
+                        <mat-icon>refresh</mat-icon>
                         Refresh
                     </button>
                 </div>
-              </div>
+            </div>
         </mat-toolbar-row>
     </mat-toolbar><br />
 
-    <ul>
-        <li *ngFor="let recipe of recipes">  
-            <app-recipe-list-item [recipe]="recipe" (recipeChange)="editRecipe(recipe.id)"></app-recipe-list-item>
-        </li>      
-    </ul>
+    <mat-selection-list #recipeList [multiple]="false" (selectionChange)="selectionChanged_RecipeList($event)">
+        <mat-list-option *ngFor="let recipe of recipes" [value]="recipe.id">
+            {{recipe.title}}
+        </mat-list-option>
+    </mat-selection-list>
 
     <!-- <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
         class="ag-theme-material" (gridReady)="onGridReady($event)" (selectionChanged)="onSelectionChanged($event)"
@@ -37,4 +41,3 @@
     <app-recipe-edit #recipeEdit [recipeId]="selectedRecipeId"></app-recipe-edit>
 </div>
 <br /><br />
-

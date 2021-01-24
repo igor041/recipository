@@ -19,6 +19,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select'
+import { MatList, MatListModule } from '@angular/material/list';
 import { RecipeListItemComponent } from './components/recipe-list-item/recipe-list-item.component';
  
 @NgModule({
@@ -45,7 +47,9 @@ import { RecipeListItemComponent } from './components/recipe-list-item/recipe-li
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
