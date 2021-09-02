@@ -22,6 +22,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'
 import { MatList, MatListModule } from '@angular/material/list';
 import { RecipeListItemComponent } from './components/recipe-list-item/recipe-list-item.component';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
  
 @NgModule({
   declarations: [
@@ -49,7 +51,12 @@ import { RecipeListItemComponent } from './components/recipe-list-item/recipe-li
     ReactiveFormsModule,
     MatInputModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    NbThemeModule.forRoot({ name: 'dark' }),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbButtonModule,
+    NbCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

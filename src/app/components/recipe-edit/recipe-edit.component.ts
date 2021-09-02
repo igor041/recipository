@@ -105,14 +105,16 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
     // if(!recipe){
     //   recipe = new Recipe();
     // }
-    this.recipeForm.setValue({
-      id: (recipe?.id || ''),
-      title: (recipe?.title || ''),
-      description: (recipe?.description || ''),
-      ingredients: (recipe?.ingredients || ''),
-      recipe: (recipe?.recipe || ''),
-      link: (recipe?.link || '')
-    });
+    if(this.recipeForm){
+      this.recipeForm.setValue({
+        id: (recipe?.id || ''),
+        title: (recipe?.title || ''),
+        description: (recipe?.description || ''),
+        ingredients: (recipe?.ingredients || ''),
+        recipe: (recipe?.recipe || ''),
+        link: (recipe?.link || '')
+      });
+    }
   }
 
   createForm() {

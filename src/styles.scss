@@ -1,7 +1,14 @@
+@import 'themes';
+
+@import '~@nebular/theme/styles/globals';
+
+@include nb-install() {
+  @include nb-theme-global();
+};
 /* You can add global styles to this file, and also import other style files */
 @import "ag-grid-community/src/styles/ag-grid.scss";
 @import "ag-grid-community/src/styles/ag-theme-alpine-dark/sass/_ag-theme-alpine-dark-mixin.scss";
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+//@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 //@import "app/theme/styles/skins/orange-dark";
 // @include angular-material-theme($orange-dark-theme);

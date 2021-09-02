@@ -1,4 +1,13 @@
 <span ng-if="DEBUG"></span>
+
+<nb-card-body >
+        <div class="buttons-row">
+            <button 
+            class="mat-ripple appearance-filled size-big shape-rectangle status-outline ng-star-inserted nb-transition" 
+             > primary </button>
+        </div>
+    </nb-card-body>
+
 <br />
 <div style="margin: auto; width: 90%;">
     <mat-toolbar color="primary">
@@ -11,14 +20,15 @@
                 <div fxFlex fxLayoutAlign="center center">
                 </div>
                 <div fxFlex fxLayoutAlign="flex-end center">
-                    <button mat-raised-button (click)="newRecipe()" style="outline: none;">
-                        <mat-icon>new</mat-icon>
+                    <button nbButton (click)="newRecipe()"                    
+                    class="input-full-width size-medium status-primary shape-semi-round nb-transition" >
                         New Recipe
-                    </button>
-                    <button mat-raised-button (click)="refreshGrid()" style="outline: none;">
-                        <mat-icon>refresh</mat-icon>
+                    </button>&nbsp;
+                    <button nbButton (click)="refreshGrid()" class="button-indent">
                         Refresh
                     </button>
+
+                    
                 </div>
             </div>
         </mat-toolbar-row>
