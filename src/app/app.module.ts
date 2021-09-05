@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select'
 import { MatList, MatListModule } from '@angular/material/list';
 import { RecipeListItemComponent } from './components/recipe-list-item/recipe-list-item.component';
-import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule } from '@nebular/theme';
+import { NbThemeModule, NbLayoutModule, NbButtonModule, NbCardModule, NbTabsetModule, NbListModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
  
 @NgModule({
@@ -57,6 +57,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
     NbEvaIconsModule,
     NbButtonModule,
     NbCardModule,
+    NbTabsetModule,
+    NbListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

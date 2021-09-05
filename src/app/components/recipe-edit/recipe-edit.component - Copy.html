@@ -1,0 +1,235 @@
+<!-- https://stackblitz.com/edit/example-angular-material-reactive-form?file=app%2Fapp.component.html -->
+
+<!-- <span *ngIf="recipeId"> -->
+
+    <nb-card>
+        <nb-card-body class="example-items-rows">
+            <input type="text" nbInput fullWidth 
+                class="input-full-width size-medium status-basic shape-rectangle nb-transition" placeholder="Default">
+            <input type="text" nbInput placeholder="Text field" 
+                class="input-full-width size-medium status-basic shape-rectangle nb-transition">
+            <input type="text" nbInput placeholder="Disabled Text field" 
+            class="input-full-width size-medium status-basic shape-rectangle nb-transition" disabled>
+          
+          <textarea rows="5" nbinput="" fullwidth="" shape="round" placeholder="Text Area" 
+          class="input-full-width size-medium status-basic shape-semi-round nb-transition" 
+          style="margin-top: 16px; margin-bottom: 0px; height: 156px;"></textarea>
+
+        </nb-card-body>
+      </nb-card>
+
+    <mat-toolbar color="primary">
+        <mat-toolbar-row>
+            <div fxShow="true" fxHide.lt-md fxFlex fxLayout>
+                <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+                <div fxFlex>
+                    <span class="fill-remaining-space">Edit Recipe</span>
+                </div>
+                <div fxFlex fxLayoutAlign="center center">
+                </div>
+                <div fxFlex fxLayoutAlign="flex-end center">
+                    <button mat-raised-button (click)="saveData()" style="outline: none;">
+                        <mat-icon>save</mat-icon> Save</button>
+                </div>
+            </div>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-tab-group #tabs animationDuration="0ms" dynamicHeight [backgroundColor]="'black'">
+        <mat-tab label="General Info">
+            <mat-card fxFill>
+                <form [formGroup]="recipeForm" class="form" fxFill>
+                    <div class="form-row" style="margin-bottom: -0em;">
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                                <mat-label>Title</mat-label>
+                                <input matInput placeholder="Title" formControlName="title" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">person</mat-icon>
+                                <mat-label>Description</mat-label>
+                                <input matInput placeholder="Description" formControlName="description" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom: -0em;">
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">phone</mat-icon>
+                                <mat-label>Ingredients</mat-label>
+                                <input matInput placeholder="Ingredients" formControlName="ingredients" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <mat-form-field appearance="outline" fxFlexFill>
+                                <mat-icon matPrefix class="mr-1 text-muted">email</mat-icon>
+                                <mat-label>Recipe</mat-label>
+                                <input matInput placeholder="Recipe" formControlName="recipe" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <ng-template #forminfo>
+                        <div class="container">
+                            {{ post | json }}
+                        </div>
+                    </ng-template>
+                    <div class="container" style="margin: auto; align-content: center;" fxFill>
+                        <div>
+                            <!-- <app-address-form #addressForm [userName]="userName"></app-address-form> -->
+                        </div>
+                    </div>
+                </form>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Ingridients">
+            <mat-card fxFill>
+                <!-- <app-car-manager></app-car-manager> -->
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+<!-- </span> -->
+<pre>{{ currentRecipeJson }}</pre>
+
+
+
+<p>Samples (use theme):</p> 
+<div  class="row">
+    <div class="col-md-6">
+        <nb-card >
+            <nb-card-header >Using the Grid</nb-card-header>
+            <nb-card-body >
+                <form  novalidate="" class="ng-untouched ng-pristine ng-valid">
+                    <div  class="form-group row"><label  for="inputEmail1"
+                            class="label col-sm-3 col-form-label">Email</label>
+                        <div  class="col-sm-9"><input  type="email"
+                                nbinput="" fullwidth="" id="inputEmail1" placeholder="Email"
+                                class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    </div>
+                    <div  class="form-group row"><label 
+                            for="inputPassword2" class="label col-sm-3 col-form-label">Password</label>
+                        <div  class="col-sm-9"><input  type="password"
+                                nbinput="" fullwidth="" id="inputPassword2" placeholder="Password"
+                                class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    </div>
+                    <div  class="form-group row"><label 
+                            class="col-sm-3 label">Radios</label>
+                        <div  class="col-sm-9">
+                            <!-- <nb-radio-group >
+                                <nb-radio  class="status-basic"><label
+                                       ><input type="radio"
+                                            class="native-input visually-hidden" name="undefined"
+                                            value="undefined"><span _ngcontent-oqu-c183=""
+                                            class="outer-circle"></span><span _ngcontent-oqu-c183=""
+                                            class="inner-circle"></span><span class="text">Option
+                                            1</span></label></nb-radio>
+                                <nb-radio class="status-basic"><label
+                                        _ngcontent-oqu-c183=""><input type="radio"
+                                            class="native-input visually-hidden" name="undefined"
+                                            value="undefined"><span _ngcontent-oqu-c183=""
+                                            class="outer-circle"></span><span _ngcontent-oqu-c183=""
+                                            class="inner-circle"></span><span class="text">Option
+                                            2</span></label></nb-radio>
+                                <nb-radio  disabled="" _nghost-oqu-c183="" class="status-basic">
+                                    <label ><input type="radio"
+                                            class="native-input visually-hidden" name="undefined" value="undefined"
+                                            disabled=""><span  class="outer-circle"></span><span
+                                            class="inner-circle"></span><span
+                                            class="text">Disabled Option</span></label>
+                                </nb-radio>
+                            </nb-radio-group> -->
+                        </div>
+                    </div>
+                    <div  class="form-group row">
+                        <div  class="offset-sm-3 col-sm-9"><button 
+                                type="submit" nbbutton="" status="primary" aria-disabled="false" tabindex="0"
+                                class="appearance-filled size-medium shape-rectangle status-primary nb-transition">Sign
+                                in</button></div>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+        <nb-card  >
+            <nb-card-header >Form without labels</nb-card-header>
+            <nb-card-body >
+                <form  novalidate="" class="ng-untouched ng-pristine ng-valid">
+                    <div  class="form-group"><input  type="text" nbinput=""
+                            fullwidth="" placeholder="Recipients"
+                            class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    <div  class="form-group"><input  type="text" nbinput=""
+                            fullwidth="" placeholder="Subject"
+                            class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    <div  class="form-group"><textarea  nbinput=""
+                            placeholder="Message"
+                            class="size-medium status-basic shape-rectangle nb-transition"></textarea></div><button
+                         type="submit" nbbutton="" status="success" aria-disabled="false"
+                        tabindex="0"
+                        class="status-success appearance-filled size-medium shape-rectangle nb-transition">Send</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div  class="col-md-6">
+        <nb-card  _nghost-oqu-c77="">
+            <nb-card-header >Basic form</nb-card-header>
+            <nb-card-body >
+                <form  novalidate="" class="ng-untouched ng-pristine ng-valid">
+                    <div  class="form-group"><label 
+                            for="exampleInputEmail1" class="label">Email address</label><input 
+                            type="email" nbinput="" fullwidth="" id="exampleInputEmail1" placeholder="Email"
+                            class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    <div  class="form-group"><label 
+                            for="exampleInputPassword1" class="label">Password</label><input 
+                            type="password" nbinput="" fullwidth="" id="exampleInputPassword1" placeholder="Password"
+                            class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    <div  class="form-group">
+                        <!-- <nb-checkbox   class="status-basic nb-transition">
+                            <label  class="label"><input  type="checkbox"
+                                    class="native-input visually-hidden"><span 
+                                    class="custom-checkbox">
+                                </span><span  class="text">Check me out</span></label>
+                        </nb-checkbox> -->
+                    </div><button  type="submit" nbbutton="" status="danger" aria-disabled="false"
+                        tabindex="0"
+                        class="appearance-filled size-medium shape-rectangle status-danger nb-transition">Submit</button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+        <nb-card  _nghost-oqu-c77="">
+            <nb-card-header >Block form</nb-card-header>
+            <nb-card-body >
+                <div  class="row">
+                    <div  class="col-sm-6">
+                        <div  class="form-group"><label 
+                                for="inputFirstName" class="label">First Name</label><input 
+                                type="text" nbinput="" fullwidth="" id="inputFirstName" placeholder="First Name"
+                                class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    </div>
+                    <div  class="col-sm-6">
+                        <div  class="form-group"><label  for="inputLastName"
+                                class="label">Last Name</label><input  type="text" nbinput=""
+                                fullwidth="" id="inputLastName" placeholder="Last Name"
+                                class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    </div>
+                </div>
+                <div  class="row">
+                    <div  class="col-sm-6">
+                        <div  class="form-group"><label  for="inputEmail"
+                                class="label">Email</label><input  type="email" nbinput=""
+                                fullwidth="" id="inputEmail" placeholder="Email"
+                                class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    </div>
+                    <div  class="col-sm-6">
+                        <div  class="form-group"><label  for="inputWebsite"
+                                class="label">Website</label><input  type="text" nbinput=""
+                                fullwidth="" id="inputWebsite" placeholder="Website"
+                                class="input-full-width size-medium status-basic shape-rectangle nb-transition"></div>
+                    </div>
+                </div><button  type="submit" nbbutton="" aria-disabled="false" tabindex="0"
+                    class="appearance-filled size-medium shape-rectangle status-basic nb-transition">Submit</button>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

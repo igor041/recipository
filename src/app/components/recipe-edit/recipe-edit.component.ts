@@ -22,6 +22,19 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   public get currentRecipeJson(): string{
     return JSON.stringify(this.currentRecipe);
   }
+  public ingredients = [
+    {"name" : "Salt" },
+    {"name" : "Pepper" },
+    {"name" : "Oil" },
+    {"name" : "Vinegar" },
+    {"name" : "Cheese" },
+    {"name" : "Mayo" }];
+
+  public steps= [
+    {"name" : "Do this" },
+    {"name" : "Do that" },
+    {"name" : "Do other" },
+    {"name" : "..and final" }];
 
   constructor(
     private formBuilder: FormBuilder,

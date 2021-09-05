@@ -34,11 +34,18 @@
         </mat-toolbar-row>
     </mat-toolbar><br />
 
+    <nb-list>
+        <nb-list-item *ngFor="let recipe of recipes">
+            Recipe title: {{ recipe.title }}
+        </nb-list-item>
+    </nb-list>
+
+<!-- 
     <mat-selection-list #recipeList [multiple]="false" (selectionChange)="selectionChanged_RecipeList($event)">
         <mat-list-option *ngFor="let recipe of recipes" [value]="recipe.id">
             {{recipe.title}}
         </mat-list-option>
-    </mat-selection-list>
+    </mat-selection-list> -->
 
     <!-- <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
         class="ag-theme-material" (gridReady)="onGridReady($event)" (selectionChanged)="onSelectionChanged($event)"
