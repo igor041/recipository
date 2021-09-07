@@ -5,7 +5,6 @@ import { Recipe } from '@root/app/models/recipe';
 import { RecipeService } from '@root/app/services/recipe.service';
 import { LoggerService } from '@root/app/services/logger.service';
 import { Observable } from 'rxjs';
-import { RecipeDbService } from '@root/app/services/recipe-db.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -22,19 +21,6 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
   public get currentRecipeJson(): string{
     return JSON.stringify(this.currentRecipe);
   }
-  public ingredients = [
-    {"name" : "Salt" },
-    {"name" : "Pepper" },
-    {"name" : "Oil" },
-    {"name" : "Vinegar" },
-    {"name" : "Cheese" },
-    {"name" : "Mayo" }];
-
-  public steps= [
-    {"name" : "Do this" },
-    {"name" : "Do that" },
-    {"name" : "Do other" },
-    {"name" : "..and final" }];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,7 +45,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.createForm();
-    this.loadRecipe(this.recipeId);
+    this.loadRecipe(+this.recipeId);
     this.recipeForm.valueChanges.subscribe(x => {
       if (this.currentRecipe) {
         //this.logger.log("valchanges.x: " + JSON.stringify(x));
@@ -70,6 +56,10 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
         //this.currentRecipe.recipe = x.recipe; 
       }
     });
+    this.recipeService.recipeSelected.subscribe(rid => {
+      this.logger.log("RecipeEdit.recipeSelectedSubscription:" + rid);  
+      this.loadRecipe(rid);    
+    })
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -77,7 +67,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
       // Edit Existing
       this.logger.log("RecipeEdit.ngOnChanges:" + JSON.stringify(changes) + ",recipeId: " + changes.recipeId.currentValue);
       this.recipeId = changes.recipeId?.currentValue;
-      this.loadRecipe(this.recipeId);
+      this.loadRecipe(+this.recipeId);
     }else{
       // Create New
       this.logger.log("RecipeEdit.creatingNew:");
@@ -98,7 +88,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
     );
   }
 
-  loadRecipe(recipeId: string) {
+  loadRecipe(recipeId: number) {
     this.recipeService.getRecipe(recipeId).subscribe(u => {
       this.logger.log("recipe: " + JSON.stringify(u));
       this.currentRecipe = u;
@@ -123,12 +113,12 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
         id: (recipe?.id || ''),
         title: (recipe?.title || ''),
         description: (recipe?.description || ''),
-        //ingredients: (recipe?.recipeIngredients || []),
+        recipeIngredients: (recipe?.recipeIngredients || []),
         //recipe: (recipe?.recipeSteps || []),
         //link: (recipe?.link || '')
       });
     }
-  }
+  }  
 
   createForm() {
     let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -136,7 +126,7 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
       'id': [null, Validators.required],
       'title': [null, Validators.required],
       'description': [null, Validators.required],
-      //'ingredients': [null, Validators.required],
+      'recipeIngredients': [null, Validators.required],
       //'recipe': [null, Validators.required],
       //'link': [null],
     });

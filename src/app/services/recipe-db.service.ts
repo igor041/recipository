@@ -13,7 +13,7 @@ import { LoggerService } from '@root/app/services/logger.service';
 export class RecipeDbService {
 
   // Url of the node.js/Express Recipe service running on port 8000.
-  public nodeRecipeSvcUrl = environment.apiUrl; // 'http://localhost:8000/';
+  public nodeRecipeSvcUrl = environment.apiUrl_Node; // 'http://localhost:8000/';
   // Url of the static data served through angular app.
   public recipesUrl = "assets/data/";
   public isServiceRunning: boolean = false;

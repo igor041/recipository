@@ -17,14 +17,14 @@ import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
   styleUrls: ['./recipe-list.component.scss']
 })
 export class RecipeListComponent implements OnInit, AfterViewInit {
-  columnDefs = [
-    { headerName: 'Id', field: 'id', sortable: true, resizable: true },
-    { headerName: 'Title', field: 'title', sortable: true, resizable: true },
-    { headerName: 'Description', field: 'description', sortable: true, editable: true, resizable: true },
-    { headerName: 'Ingredients', field: 'ingridients', sortable: true, editable: true, resizable: true },
-    { headerName: 'Recipe', field: 'recipe', sortable: true, editable: true, resizable: true },
-    { headerName: 'Link', field: 'link', sortable: true, editable: true, resizable:true }
-  ];
+  // columnDefs = [
+  //   { headerName: 'Id', field: 'id', sortable: true, resizable: true },
+  //   { headerName: 'Title', field: 'title', sortable: true, resizable: true },
+  //   { headerName: 'Description', field: 'description', sortable: true, editable: true, resizable: true },
+  //   { headerName: 'Ingredients', field: 'ingridients', sortable: true, editable: true, resizable: true },
+  //   { headerName: 'Recipe', field: 'recipe', sortable: true, editable: true, resizable: true },
+  //   { headerName: 'Link', field: 'link', sortable: true, editable: true, resizable:true }
+  // ];
   formGroup: FormGroup;
   rowData = [];
   recipes: Recipe[] = [];
@@ -54,7 +54,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
 
     this.gridOptions = <GridOptions>{
       rowData: this.rowData,
-      columnDefs: this.columnDefs,
+      //columnDefs: this.columnDefs,
       onRowClicked: () => { this.onRowClicked(); },
       onColumnResized: function (event) { logger.log('A column was resized'); },
       rowHeight: 48, // recommended row height for material design data grids,
@@ -188,54 +188,9 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     // Load full recipe data from the service
     this.recipeService.getRecipe(recipeId).subscribe(
       r => {
-        this.recipeService.recipeSelected.emit(r); // TODO: Implement this later - Service based communication
-        this.setRecipeFormValues(r);
-        this.logger.log("Recipes:" + JSON.stringify(r));
+        this.recipeService.toggleRecipeSelected(r.id);
       }
     );
   }
-
-  setRecipeFormValues(recipe: Recipe) {
-    this.recipeEdit.recipeForm.setValue({ 
-      id: (recipe?.id || ''),
-      title: (recipe?.title || ''),
-      description: (recipe?.description || ''),
-      //Language: (recipe?.language || ''),
-      //Measurements: (recipe?.username || ''),
-      //recipeIngredients: (recipe?.recipeIngredients || []),
-      //recipeSteps: (recipe?.recipeSteps || []),
-
-      // username: (user?.username || ''), 
-      // password: (user?.password || ''), 
-      // firstName: (user?.firstName || ''), 
-      // lastName: (user?.lastName || ''), 
-      // phone: (user?.phone || ''), 
-      // facebook: (user?.firstName || ''), 
-      // email: (user?.email || ''), 
-      // website: (user?.website || ''), 
-    });
-  }
-
-  // createForm() {
-  //   let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  //   this.recipeEdit.recipeForm. = this.formBuilder.group({
-  //     id: [null, Validators.required],
-  //     title: [null, Validators.required],
-  //     description: [null, Validators.required],
-  //     //Language: [null],
-  //     //Measurements: [null],
-  //     recipeIngredients: [null], 
-  //     recipeSteps: [null],
-
-  //     // 'username': [null, Validators.required], 
-  //     // 'password': [null, Validators.required],
-  //     // 'firstName': [null, Validators.required],
-  //     // 'lastName': [null, Validators.required],
-  //     // 'phone':[null, Validators.required],
-  //     // 'facebook': [null],
-  //     // 'email': [null, Validators.required],
-  //     // 'website': [null],
-  //   });
-  // }
 }
 

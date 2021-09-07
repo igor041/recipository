@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Recipe } from '@root/app/models/recipe';
-import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 //import { MessageService } from '@root/app/services/message.service';
 import { environment } from '../../environments/environment';
@@ -14,7 +14,10 @@ import { LoggerService } from '@root/app/services/logger.service';
 export class RecipeService {
 
   // Url of the node.js/Express Recipe service running on port 8000.
-  public nodeRecipeSvcUrl = environment.apiUrl; // 'http://localhost:8000/';
+  public apiUrl_Node = environment.apiUrl_Node; // 'http://localhost:8000/';
+  // Url of MVC REST API service running on port 8001
+  public apiUrl_mvcRest = environment.apiUrl_mvcRest; // 'http://localhost:8001/';
+
   // Url of the static data served through angular app.
   public recipesUrl = "assets/data/";
   public isServiceRunning: boolean = false;
@@ -29,7 +32,7 @@ export class RecipeService {
 
   // check if the service is running by calling it's serviceRunning() function
   serviceRunning() {
-    return this.http.get<boolean>(this.nodeRecipeSvcUrl + 'api/serviceRunning').pipe(
+    return this.http.get<boolean>(this.apiUrl_Node + 'api/serviceRunning').pipe(
       catchError(err => {
         this.logger.log("serviceRunning().caught: " + JSON.stringify(err));
         return of(false);
@@ -42,7 +45,7 @@ export class RecipeService {
         this.logger.log("GetRecipes.switchMap.svrRunning flag: " + val);
         var tmp: Observable<Recipe[]>;
         val ? 
-          tmp = this.http.get<Recipe[]>(this.nodeRecipeSvcUrl + 'api/recipes/')
+          tmp = this.http.get<Recipe[]>(this.apiUrl_Node + 'api/recipes/')
         :
           tmp = this.getLocalRecipes();
         return tmp;
@@ -56,7 +59,7 @@ export class RecipeService {
         this.logger.log("GetRecipe(" + id + ").switchMap.svrRunning flag: " + val);
         var tmp: Observable<Recipe>;
         val ? 
-          tmp = this.http.get<Recipe>(this.nodeRecipeSvcUrl + 'api/recipes/' + id)
+          tmp = this.http.get<Recipe>(this.apiUrl_Node + 'api/recipes/' + id)
         :
           tmp = this.getLocalRecipe(id);
         tmp.subscribe( u => this.logger.log("getRecipe.getRandomLocalRecipe: " + JSON.stringify(u)));
@@ -78,12 +81,12 @@ export class RecipeService {
   }
 
   insertRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.http.post<Recipe>(this.nodeRecipeSvcUrl + 'api/recipes/', recipe)
+    return this.http.post<Recipe>(this.apiUrl_Node + 'api/recipes/', recipe)
   }
 
   updateRecipe(recipe: Recipe): Observable<Recipe> {
     return this.http.put<Recipe>(
-      this.nodeRecipeSvcUrl + 'api/recipes/' + recipe.id,
+      this.apiUrl_Node + 'api/recipes/' + recipe.id,
       recipe
     )
   }
@@ -97,10 +100,17 @@ export class RecipeService {
   }
 
   deleteRecipe(recipeId: string) {
-    return this.http.delete(this.nodeRecipeSvcUrl + 'api/recipes/' + recipeId)
+    return this.http.delete(this.apiUrl_Node + 'api/recipes/' + recipeId)
   }
 
   //Events
-  recipeSelected = new EventEmitter<Recipe>();
+  //recipeSelected = new EventEmitter<Recipe>();
+  private _recipeSelected = new BehaviorSubject<number>(null);
+  readonly recipeSelected = this._recipeSelected.asObservable();
+
+  toggleRecipeSelected(recipeId: number){
+    this._recipeSelected.next(recipeId);
+  }
+  // this._todo.next(Object.assign([], this.todos));
 }
 

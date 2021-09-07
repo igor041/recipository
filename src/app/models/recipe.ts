@@ -1,5 +1,5 @@
 export class Recipe{
-    id: string;
+    id: number;
     title: string = "";
     description: string = "";
     recipeIngredients: number[] = [];

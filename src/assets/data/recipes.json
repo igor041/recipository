@@ -3,7 +3,6 @@
         "id": "1",
         "title" : "Recipe 1",
         "description": "Description of recipe 1", 
-        "ingredients": "blh blah",
         "recipe": "20ml of vodka. Drink.",
         "link" : "http:://www.recipes.com/recipe1"
     },
