@@ -65,9 +65,9 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
         //this.logger.log("valchanges.x: " + JSON.stringify(x));
         this.currentRecipe.title = x.title;
         this.currentRecipe.description = x.description;
-        this.currentRecipe.ingredients = x.ingridients;
-        this.currentRecipe.link = x.link;
-        this.currentRecipe.recipe = x.recipe; 
+        //this.currentRecipe.ingredients = x.ingridients;
+        //this.currentRecipe.link = x.link;
+        //this.currentRecipe.recipe = x.recipe; 
       }
     });
   }
@@ -123,9 +123,9 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
         id: (recipe?.id || ''),
         title: (recipe?.title || ''),
         description: (recipe?.description || ''),
-        ingredients: (recipe?.ingredients || ''),
-        recipe: (recipe?.recipe || ''),
-        link: (recipe?.link || '')
+        //ingredients: (recipe?.recipeIngredients || []),
+        //recipe: (recipe?.recipeSteps || []),
+        //link: (recipe?.link || '')
       });
     }
   }
@@ -136,9 +136,9 @@ export class RecipeEditComponent implements OnInit, AfterViewInit {
       'id': [null, Validators.required],
       'title': [null, Validators.required],
       'description': [null, Validators.required],
-      'ingredients': [null, Validators.required],
-      'recipe': [null, Validators.required],
-      'link': [null],
+      //'ingredients': [null, Validators.required],
+      //'recipe': [null, Validators.required],
+      //'link': [null],
     });
   }
 

@@ -1,4 +1,5 @@
 import { AfterViewInit, ChangeDetectorRef, Component, Injector, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Recipe } from '@root/app/models/recipe';
@@ -24,6 +25,7 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     { headerName: 'Recipe', field: 'recipe', sortable: true, editable: true, resizable: true },
     { headerName: 'Link', field: 'link', sortable: true, editable: true, resizable:true }
   ];
+  formGroup: FormGroup;
   rowData = [];
   recipes: Recipe[] = [];
   gridOptions: GridOptions;
@@ -45,7 +47,8 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
     public injector: Injector,
     public router: Router,
     public logger: LoggerService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private formBuilder: FormBuilder
     //public accountService: AccountService
     ) {
 
@@ -179,5 +182,60 @@ export class RecipeListComponent implements OnInit, AfterViewInit {
       duration: 2000,
     });
   }
+
+  openRecipeInEditor(recipeId: string){
+    console.log("openRecipeInEditor:" + recipeId);
+    // Load full recipe data from the service
+    this.recipeService.getRecipe(recipeId).subscribe(
+      r => {
+        this.recipeService.recipeSelected.emit(r); // TODO: Implement this later - Service based communication
+        this.setRecipeFormValues(r);
+        this.logger.log("Recipes:" + JSON.stringify(r));
+      }
+    );
+  }
+
+  setRecipeFormValues(recipe: Recipe) {
+    this.recipeEdit.recipeForm.setValue({ 
+      id: (recipe?.id || ''),
+      title: (recipe?.title || ''),
+      description: (recipe?.description || ''),
+      //Language: (recipe?.language || ''),
+      //Measurements: (recipe?.username || ''),
+      //recipeIngredients: (recipe?.recipeIngredients || []),
+      //recipeSteps: (recipe?.recipeSteps || []),
+
+      // username: (user?.username || ''), 
+      // password: (user?.password || ''), 
+      // firstName: (user?.firstName || ''), 
+      // lastName: (user?.lastName || ''), 
+      // phone: (user?.phone || ''), 
+      // facebook: (user?.firstName || ''), 
+      // email: (user?.email || ''), 
+      // website: (user?.website || ''), 
+    });
+  }
+
+  // createForm() {
+  //   let emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  //   this.recipeEdit.recipeForm. = this.formBuilder.group({
+  //     id: [null, Validators.required],
+  //     title: [null, Validators.required],
+  //     description: [null, Validators.required],
+  //     //Language: [null],
+  //     //Measurements: [null],
+  //     recipeIngredients: [null], 
+  //     recipeSteps: [null],
+
+  //     // 'username': [null, Validators.required], 
+  //     // 'password': [null, Validators.required],
+  //     // 'firstName': [null, Validators.required],
+  //     // 'lastName': [null, Validators.required],
+  //     // 'phone':[null, Validators.required],
+  //     // 'facebook': [null],
+  //     // 'email': [null, Validators.required],
+  //     // 'website': [null],
+  //   });
+  // }
 }
 

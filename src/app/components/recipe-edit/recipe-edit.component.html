@@ -3,7 +3,7 @@
 <!-- <span *ngIf="recipeId"> -->
 
 <nb-tabset>
-    <nb-tab tabTitle="Users">
+    <nb-tab tabTitle="Recipes">
         <form [formGroup]="recipeForm" class="form" fxFill>
             <nb-card>
                 <nb-card-header>
@@ -22,6 +22,7 @@
                         <div class="form-group">
                             <!-- <label for="inputFirstName" class="label">Title</label> -->
                             <input type="text" nbInput fullWidth id="inputTitle" placeholder="Title"
+                                formControlName="title" required
                                 class="input-full-width size-medium status-basic shape-rectangle nb-transition" >
                         </div>
                     </div>
@@ -30,6 +31,7 @@
                         <div class="form-group">
                             <!-- <label for="inputDescription" class="label">Description</label> -->
                             <input type="text" nbinput="" fullwidth="" id="inputDescription" placeholder="Description"
+                                formControlName="description" required
                                 class="input-full-width size-medium status-basic shape-rectangle nb-transition">
                         </div>
                     </div>
@@ -39,9 +41,9 @@
                         <div class="form-group">
                             <label for="inputEmail" class="label">Ingredients:</label>
                             <nb-list>
-                                <nb-list-item *ngFor="let ingredient of ingredients">
+                                <!-- <nb-list-item *ngFor="let ingredient of this.currentRecipe.recipeIngredients">
                                     Ingredient: {{ ingredient.name }}
-                                </nb-list-item>
+                                </nb-list-item> -->
                             </nb-list>
                             <!-- <input
                                 type="email" nbinput="" fullwidth="" id="inputEmail" placeholder=""
@@ -56,9 +58,9 @@
                             <!-- <input type="text" nbinput="" fullwidth="" id="inputWebsite" placeholder="Website"
                                 class="input-full-width size-medium status-basic shape-rectangle nb-transition"> -->
                             <nb-list>
-                                <nb-list-item *ngFor="let step of steps; let i = index">
+                                <!-- <nb-list-item *ngFor="let step of this.currentRecipe.recipeSteps; let i = index">
                                     Step {{ i }}: {{ step.name }}
-                                </nb-list-item>
+                                </nb-list-item> -->
                             </nb-list>
                         </div>
                     </div>

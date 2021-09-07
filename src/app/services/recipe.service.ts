@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Recipe } from '@root/app/models/recipe';
 import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -50,15 +50,15 @@ export class RecipeService {
     );
   }
   
-  getRecipe(name) {
+  getRecipe(id) {
     return this.serviceRunning().pipe(
       switchMap(val => {
-        this.logger.log("GetRecipe(" + name + ").switchMap.svrRunning flag: " + val);
+        this.logger.log("GetRecipe(" + id + ").switchMap.svrRunning flag: " + val);
         var tmp: Observable<Recipe>;
         val ? 
-          tmp = this.http.get<Recipe>(this.nodeRecipeSvcUrl + 'api/recipes/' + name)
+          tmp = this.http.get<Recipe>(this.nodeRecipeSvcUrl + 'api/recipes/' + id)
         :
-          tmp = this.getLocalRecipe(name);
+          tmp = this.getLocalRecipe(id);
         tmp.subscribe( u => this.logger.log("getRecipe.getRandomLocalRecipe: " + JSON.stringify(u)));
         return tmp;
       })
@@ -99,5 +99,8 @@ export class RecipeService {
   deleteRecipe(recipeId: string) {
     return this.http.delete(this.nodeRecipeSvcUrl + 'api/recipes/' + recipeId)
   }
+
+  //Events
+  recipeSelected = new EventEmitter<Recipe>();
 }
 

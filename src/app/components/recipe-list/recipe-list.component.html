@@ -1,58 +1,70 @@
 <span ng-if="DEBUG"></span>
 
-<nb-card-body >
-        <div class="buttons-row">
-            <button 
-            class="mat-ripple appearance-filled size-big shape-rectangle status-outline ng-star-inserted nb-transition" 
-             > primary </button>
-        </div>
-    </nb-card-body>
-
-<br />
-<div style="margin: auto; width: 90%;">
-    <mat-toolbar color="primary">
-        <mat-toolbar-row>
-            <div fxShow="true" fxHide.lt-md fxFlex fxLayout>
-                <!-- The following menu items will be hidden on both SM and XS screen sizes -->
-                <div fxFlex>
-                    <span class="fill-remaining-space">Recipes</span>
-                </div>
-                <div fxFlex fxLayoutAlign="center center">
-                </div>
-                <div fxFlex fxLayoutAlign="flex-end center">
-                    <button nbButton (click)="newRecipe()"                    
-                    class="input-full-width size-medium status-primary shape-semi-round nb-transition" >
-                        New Recipe
-                    </button>&nbsp;
-                    <button nbButton (click)="refreshGrid()" class="button-indent">
-                        Refresh
-                    </button>
-
-                    
-                </div>
+<nb-accordion>
+    <nb-accordion-item>
+        <nb-accordion-item-header>
+            Recipes
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+            <mat-toolbar color="primary">
+                <mat-toolbar-row>
+                    <div fxShow="true" fxHide.lt-md fxFlex fxLayout>
+                        <!-- The following menu items will be hidden on both SM and XS screen sizes -->
+                        <div fxFlex>
+                            <span class="fill-remaining-space">  </span>
+                        </div>
+                        <div fxFlex fxLayoutAlign="center center">
+                        </div>
+                        <div fxFlex fxLayoutAlign="flex-end center">
+                            <button nbButton (click)="newRecipe()"
+                                class="input-full-width size-medium status-primary shape-semi-round nb-transition">
+                                New Recipe
+                            </button>&nbsp;
+                            <button nbButton (click)="refreshGrid()" class="button-indent">
+                                Refresh
+                            </button>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <br/>
+            <div style="margin: auto; width: 100%;">
+                <nb-list>
+                    <nb-list-item *ngFor="let recipe of recipes" (click)="openRecipeInEditor(recipe.id)">
+                        Recipe title: {{ recipe.title }}
+                        <!-- <app-user-edit #userEdit [(userName)]="selectedUserName"></app-user-edit> -->
+                    </nb-list-item>
+                </nb-list>
             </div>
-        </mat-toolbar-row>
-    </mat-toolbar><br />
 
-    <nb-list>
-        <nb-list-item *ngFor="let recipe of recipes">
-            Recipe title: {{ recipe.title }}
-        </nb-list-item>
-    </nb-list>
-
-<!-- 
+                <!-- 
     <mat-selection-list #recipeList [multiple]="false" (selectionChange)="selectionChanged_RecipeList($event)">
         <mat-list-option *ngFor="let recipe of recipes" [value]="recipe.id">
             {{recipe.title}}
         </mat-list-option>
     </mat-selection-list> -->
 
-    <!-- <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
+                <!-- <ag-grid-angular #agGrid [gridOptions]="gridOptions" style="margin: auto; width: 95%; height: 300px;"
         class="ag-theme-material" (gridReady)="onGridReady($event)" (selectionChanged)="onSelectionChanged($event)"
         [defaultColDef]="defaultColDef" [rowData]="rowData" [columnDefs]="columnDefs"
         [loadingCellRenderer]="loadingCellRenderer" [loadingCellRendererParams]="loadingCellRendererParams">
     </ag-grid-angular> -->
-</div>
+
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>
+
+
+<!-- <nb-card-body >
+        <div class="buttons-row">
+            <button 
+            class="mat-ripple appearance-filled size-big shape-rectangle status-outline ng-star-inserted nb-transition" 
+             > primary </button>
+        </div>
+    </nb-card-body> -->
+
+<br />
+
 <br />
 <div style="margin: auto; width: 90%;">
     <app-recipe-edit #recipeEdit [recipeId]="selectedRecipeId"></app-recipe-edit>
